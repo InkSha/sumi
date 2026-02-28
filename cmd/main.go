@@ -6,6 +6,7 @@ import (
 
 	"github.com/InkShaStudio/go-command"
 	"github.com/inksha/sumi/internal/sumi_hash"
+	"github.com/inksha/sumi/internal/sumi_template"
 )
 
 func Execute() {
@@ -15,7 +16,10 @@ func Execute() {
 			fmt.Println("Hello, Sumi!")
 		})
 
-	sumi.AddSubCommand(sumi_hash.RegisterCommand())
+	sumi.AddSubCommand(
+		sumi_hash.RegisterCommand(),
+		sumi_template.RegisterCommand(),
+	)
 
 	cmd := command.RegisterCommand(sumi)
 
