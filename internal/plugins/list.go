@@ -59,7 +59,7 @@ func findPluginByGithub() []PluginManifest {
 
 	for _, repo := range repos {
 
-		if strings.Contains(repo.GetName(), "sumi-plugin-") && !*repo.IsTemplate {
+		if strings.Contains(repo.GetName(), pluginPrefix) && !*repo.IsTemplate {
 
 			url := strings.ReplaceAll(*repo.ContentsURL, "{+path}", manifestFile)
 

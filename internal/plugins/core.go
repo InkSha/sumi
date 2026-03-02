@@ -2,6 +2,7 @@ package plugins
 
 var manifestFile = "manifest.json"
 var orgName = "summink"
+var pluginPrefix = "sumi-plugin-"
 
 type PluginPlatform struct {
 	OS   string `json:"os"`

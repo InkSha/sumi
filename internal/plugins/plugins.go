@@ -18,6 +18,7 @@ func RegisterCommand() *command.SCommand {
 		ChangeDescription("Plugin commands").
 		AddSubCommand(
 			list(),
+			install(),
 		)
 
 	return cmd
