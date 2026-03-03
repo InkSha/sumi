@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"path"
+	"runtime"
 	"strings"
 
 	"github.com/InkShaStudio/go-command"
@@ -120,4 +121,30 @@ func list() *command.SCommand {
 		})
 
 	return cmd
+}
+
+func ListPlugin() []PluginDetails {
+	plugins := findPlugin()
+
+	localPlugins := []PluginDetails{}
+
+	system := runtime.GOOS
+	arch := runtime.GOARCH
+	execute := system + "-" + arch
+
+	if system == "windows" {
+		execute += ".exe"
+	}
+
+	for _, plugin := range plugins {
+		name := strings.ReplaceAll(plugin.Name, pluginPrefix, "")
+
+		localPlugins = append(localPlugins, PluginDetails{
+			Name:     name,
+			Manifest: plugin,
+			Execute:  path.Join(cfg.PluginDir, name, execute),
+		})
+	}
+
+	return localPlugins
 }
