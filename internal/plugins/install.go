@@ -34,9 +34,12 @@ func downloadPlugin(repo string, version string, system string, arch string) {
 		assetName += ".exe"
 	}
 
+topReleases:
 	for _, release := range releases {
 		for _, asset := range release.Assets {
-			if strings.EqualFold(*asset.Name, assetName) {
+
+			if strings.EqualFold(*asset.Name, assetName) || strings.HasSuffix(*asset.Name, assetName) {
+
 				assetURL := asset.GetURL()
 				assetInfo, _ := api.Get(assetURL)
 				browserDownloadURL := assetInfo["browser_download_url"].(string)
@@ -51,7 +54,7 @@ func downloadPlugin(repo string, version string, system string, arch string) {
 
 				println("install plugin "+repo+release.GetTagName()+" success to ", output)
 
-				break
+				break topReleases
 			}
 		}
 	}

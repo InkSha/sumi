@@ -61,7 +61,7 @@ func Execute() {
 				common.Exit(err.Error())
 			}
 			println(string(output))
-			break
+			return
 		}
 	}
 
