@@ -98,7 +98,21 @@ func downloadPlugin(repo string, version string, system string, arch string) {
 				common.Exit("failed to get download URL: invalid response format")
 			}
 
-			assetData, err := api.GetRaw(browserDownloadURL)
+			fmt.Printf("Downloading %s...\n", assetName)
+
+			assetData, err := api.GetWithProgress(browserDownloadURL, func(downloaded, total int64) {
+				if total > 0 {
+					percent := float64(downloaded) / float64(total) * 100
+					barWidth := 40
+					filled := int(percent / 100 * float64(barWidth))
+					bar := strings.Repeat("█", filled) + strings.Repeat("░", barWidth-filled)
+					fmt.Printf("\r[%s] %.1f%% (%d/%d KB)", bar, percent, downloaded/1024, total/1024)
+				} else {
+					fmt.Printf("\r Downloaded %d KB", downloaded/1024)
+				}
+			})
+			fmt.Println()
+
 			if err != nil {
 				common.Exit("failed to download asset: " + err.Error())
 			}
