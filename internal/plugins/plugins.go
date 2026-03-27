@@ -27,6 +27,9 @@ func RegisterCommand() *command.SCommand {
 		AddSubCommand(
 			list(),
 			install(),
+			uninstall(),
+			update(),
+			info(),
 		)
 
 	return cmd
